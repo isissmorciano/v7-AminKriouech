@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Ricerca Piatti{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Ricerca Piatti</h2>
+    <form method="post">
+        <label for="term">Termine di ricerca</label>
+        <input type="text" id="term" name="term" value="{{ term|default('') }}">
+        <button type="submit">Cerca</button>
+    </form>
+
+    {% if results is not none %}
+        {% if results %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome Piatto</th>
+                        <th>Categoria</th>
+                        <th>Prezzo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in results %}
+                    <tr>
+                        <td>{{ r['nome'] }}</td>
+                        <td><a href="{{ url_for('main.categoria_detail', category_id=r['categoria_id']) }}">{{ r['categoria_nome'] }}</a></td>
+                        <td>€ {{ "{:.2f}"|format(r['prezzo']) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nessun piatto trovato.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

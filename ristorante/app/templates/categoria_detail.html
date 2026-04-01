@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Categoria: {{ categoria['nome'] }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>{{ categoria['nome'] }}</h2>
+
+    {% if piatti %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome Piatto</th>
+                <th>Prezzo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in piatti %}
+            <tr>
+                <td>{{ p['nome'] }}</td>
+                <td>€ {{ "{:.2f}"|format(p['prezzo']) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Non ci sono piatti per questa categoria.</p>
+    {% endif %}
+
+    <p class="back-link"><a href="{{ url_for('main.crea_piatto') }}">Aggiungi un piatto a {{ categoria['nome'] }}</a></p>
+</div>
+{% endblock %}

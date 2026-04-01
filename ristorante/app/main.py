@@ -18,13 +18,14 @@ def categoria_detail(category_id):
 	categoria = categoria_repository.get_category_by_id(category_id)
 	if categoria is None:
 		abort(404)
-	piatti = piatto_repository.get_piatti_by_category(category_id)
-	return render_template("categoria_detail.html", categoria=categoria, piatti=piatti)
+	elif category_id is int:
+                            piatti = piatto_repository.get_piatti_by_category(category_id)
+                            return render_template("categoria_detail.html", categoria=categoria, piatti=piatti)
 
 
 @bp.route("/crea_categoria", methods=("GET", "POST")) # -> salva categoria nel DB
 def crea_categoria():
-	if request.method == "POST":
+	if request.method == "GET":
 		nome = request.form.get("nome", "").strip()
 		if not nome:
 			flash("Il nome della categoria è obbligatorio.")

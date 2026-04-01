@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Crea Categoria{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Crea Nuova Categoria</h2>
+    <form method="post">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" value="{{ nome|default('') }}">
+        <button type="submit">Crea Categoria</button>
+    </form>
+    <p class="back-link"><a href="{{ url_for('main.index') }}">◀ Torna alla home</a></p>
+</div>
+{% endblock %}

@@ -60,3 +60,21 @@ def create_piatto(category_id, nome, prezzo): # -> inserisce nuovo piatto
 	return cur.lastrowid
 
 
+def find_piatti_by_name(search_term): # -> cerca piatti per nome
+	"""Cerca piatti per nome (case-insensitive) e restituisce risultati con nome categoria.
+
+	Usa LOWER() per case-insensitive e ordina per categoria poi nome piatto.
+	"""
+	db = get_db()
+	pattern = f"%{search_term.lower()}%"
+	cur = db.execute(
+		"""
+		SELECT p.id, p.nome, p.prezzo, p.categoria_id, c.nome AS categoria_nome
+		FROM piatti p
+		JOIN categorie c ON p.categoria_id = c.id
+		WHERE LOWER(p.nome) LIKE ?
+		ORDER BY c.nome, p.nome
+		""",
+		(pattern,),
+	)
+	return cur.fetchall()

@@ -94,3 +94,6 @@ def ricerca():
 			flash("Inserisci un termine di ricerca.")
 
 	return render_template("ricerca.html", results=results, term=term)
+
+
+			
